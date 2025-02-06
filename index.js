@@ -54,13 +54,18 @@ function login(){
 
     if(!email){
         alert("Email field is required")
+        return;
     }
     if(!inputPassword){
         alert("Password field is required")
+        return;
 
     }
     const user =localStorage.getItem(email)
     alert("You are Login")
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPassword').value = '';
+
 
     if(!user){
         alert("You are not authentic user!")
