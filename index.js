@@ -1,73 +1,79 @@
+
 function showForm(type) {
     document.getElementById('registerForm').classList.add('d-none');
     document.getElementById('loginForm').classList.add('d-none');
-    
     if (type === 'register') {
         document.getElementById('registerForm').classList.remove('d-none');
-    } else if (type === 'login') {
+    }else if (type === 'login'){
         document.getElementById('loginForm').classList.remove('d-none');
     }
 }
 
-function register() {
-    const fullname = document.getElementById('regFullname').value;
+
+function register(){
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
     const email = document.getElementById('regEmail').value;
     const password = document.getElementById('regPassword').value;
-    
-    if (!fullname) {
-        alert("Please enter your full name.");
+
+    if (!firstName){
+        alert("Please Enter Your First Name");
         return;
     }
-    if (!email) {
-        alert("Please enter your email.");
+    if (!lastName){
+        alert("Please Enter Your Last Name");
         return;
     }
-    if (!password) {
-        alert("Please enter your password.");
+    if (!email){
+        alert("Please Enter Your Email");
+        return;
+    }
+    if (!password){
+        alert("Please Enter Your Password");
         return;
     }
 
+    const user = {firstName, lastName, email, password}
+    localStorage.setItem(email, JSON.stringify(user) )
+    alert("Registration Successful! You can login.")
 
-    const user = { fullname, email, password }
-    localStorage.setItem(email, JSON.stringify(user))
-    
-    alert("Registration successfull!! You can now login")
 
-    document.getElementById('regFullname').value ='';
-    document.getElementById('regEmail').value ='';
+    document.getElementById('firstName').value = '';
+    document.getElementById('lastName').value = '';
+    document.getElementById('regEmail').value = '';
     document.getElementById('regPassword').value = '';
-    
+
     showForm('login');
+
+
 }
 
-function login() {
+function login(){
     const email = document.getElementById('loginEmail').value;
-    const InputPassword = document.getElementById('loginPassword').value;
+    const inputPassword = document.getElementById('loginPassword').value;
 
-    if (!email) {
-        alert("Email field is required!")
+    if(!email){
+        alert("Email field is required")
+    }
+    if(!inputPassword){
+        alert("Password field is required")
+
+    }
+    const user =localStorage.getItem(email)
+    alert("You are Login")
+
+    if(!user){
+        alert("You are not authentic user!")
         return;
-    }
-    if (!InputPassword) {
-        alert("Password field is required!")
+
     }
 
-    const user = localStorage.getItem(email)
-    
-    if (!user) {
-        alert("User not exist!")
+
+    const perseUser  = JSON.parse(user)
+    if(inputPassword != perseUser.password){
+        alert("Incorrect Password");
         return;
+
     }
 
-    const perseUser = JSON.parse(user)
-    
-    if (InputPassword != perseUser.password) {
-        alert("Incorrect Password")
-        return;
-    }
-
-    alert("Login Successfull!! Welcome " + perseUser.fullname)
-
-    document.getElementById('loginEmail').value = '';
-    document.getElementById('loginPassword').value = '';
 }
